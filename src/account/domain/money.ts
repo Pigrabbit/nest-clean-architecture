@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsPositive } from "class-validator";
+import { IsNotEmpty, IsPositive } from 'class-validator';
 
 export class Money {
   @IsPositive()
@@ -11,6 +11,10 @@ export class Money {
 
   static add(a: Money, b: Money): Money {
     return new Money(a.amount + b.amount);
+  }
+
+  static of(amount: number): Money {
+    return new Money(amount);
   }
 
   isPositive(): boolean {
