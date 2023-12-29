@@ -1,5 +1,9 @@
+import { IsNotEmpty, IsPositive } from "class-validator";
+
 export class Money {
-  private amount: number;
+  @IsPositive()
+  @IsNotEmpty()
+  private readonly amount: number;
 
   constructor(money: number = 0) {
     this.amount = money;
