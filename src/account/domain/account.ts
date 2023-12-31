@@ -35,7 +35,13 @@ export class Account {
   }
 
   deposit(money: Money, sourceAccountId: AccountId): boolean {
-    const deposit = new Activity(this.id, sourceAccountId, this.id, new Date(), money);
+    const deposit = new Activity({
+      ownerAccountId: this.id,
+      sourceAccountId,
+      targetAccountId: this.id,
+      timestamp: new Date(),
+      money,
+    });
     this.activityWindow.addActivity(deposit);
     return true;
   }
@@ -45,7 +51,13 @@ export class Account {
       return false;
     }
 
-    const withdrawal = new Activity(this.id, this.id, targetAccountId, new Date(), money);
+    const withdrawal = new Activity({
+      ownerAccountId: this.id,
+      sourceAccountId: this.id,
+      targetAccountId,
+      timestamp: new Date(),
+      money,
+    });
     this.activityWindow.addActivity(withdrawal);
     return true;
   }

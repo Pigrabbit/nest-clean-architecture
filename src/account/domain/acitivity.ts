@@ -1,26 +1,44 @@
-import { AccountId } from "./account-id";
-import { ActivityId } from "./activity-id";
-import { Money } from "./money";
+import { AccountId } from './account-id';
+import { ActivityId } from './activity-id';
+import { Money } from './money';
 
 export class Activity {
-  private _id: ActivityId | null;
+  private readonly id: ActivityId | null;
+  private readonly ownerAccountId: AccountId;
+  private readonly sourceAccountId: AccountId;
+  private readonly targetAccountId: AccountId;
+  private readonly timestamp: Date;
+  private readonly money: Money;
 
-  constructor(
-    private readonly ownerAccountId: AccountId,
-    private readonly sourceAccountId: AccountId,
-    private readonly targetAccountId: AccountId,
-    private readonly timestamp: Date,
-    private readonly money: Money,
-  ) {
-    this._id = null;
+  constructor({
+    ownerAccountId,
+    sourceAccountId,
+    targetAccountId,
+    timestamp,
+    money,
+    id = null,
+  }: {
+    ownerAccountId: AccountId;
+    sourceAccountId: AccountId;
+    targetAccountId: AccountId;
+    timestamp: Date;
+    money: Money;
+    id?: ActivityId | null;
+  }) {
+    this.ownerAccountId = ownerAccountId;
+    this.sourceAccountId = sourceAccountId;
+    this.targetAccountId = targetAccountId;
+    this.timestamp = timestamp;
+    this.money = money;
+    this.id = id;
   }
 
-  get id(): ActivityId | null {
+  getId() {
     return this.id;
   }
 
-  getMoney() {
-    return this.money;
+  getOwnerAccountId() {
+    return this.ownerAccountId;
   }
 
   getTargetAccountId() {
@@ -29,5 +47,13 @@ export class Activity {
 
   getSourceAccountId() {
     return this.sourceAccountId;
+  }
+
+  getTimestamp() {
+    return this.timestamp;
+  }
+
+  getMoney() {
+    return this.money;
   }
 }

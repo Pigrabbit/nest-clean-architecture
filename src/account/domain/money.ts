@@ -13,8 +13,16 @@ export class Money {
     return new Money(a.amount + b.amount);
   }
 
+  static subtract(a: Money, b: Money): Money {
+    return new Money(a.amount - b.amount);
+  }
+
   static of(amount: number): Money {
     return new Money(amount);
+  }
+
+  getAmount(): number {
+    return this.amount;
   }
 
   isPositive(): boolean {

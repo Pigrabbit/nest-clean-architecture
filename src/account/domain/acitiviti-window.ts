@@ -1,12 +1,12 @@
-import { AccountId } from "./account-id";
-import { Activity } from "./acitivity";
-import { Money } from "./money";
+import { AccountId } from './account-id';
+import { Activity } from './acitivity';
+import { Money } from './money';
 
 export class ActivityWindow {
   private activityList: Activity[];
 
-  constructor() {
-    this.activityList = [];
+  constructor(activityList: Activity[]) {
+    this.activityList = activityList;
   }
 
   addActivity(activity: Activity) {
