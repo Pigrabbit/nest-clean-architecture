@@ -1,3 +1,3 @@
 export * from './account-lock';
-export * from './load-acocunt.port';
+export * from './load-account.port';
 export * from './update-account-state.port';
