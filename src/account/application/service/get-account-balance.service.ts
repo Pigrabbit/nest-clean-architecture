@@ -9,7 +9,7 @@ export class GetAccountBalanceService implements GetAccountBalanceQuery {
     this.loadAccountPort = loadAccountPort;
   }
 
-  getAccountBalance(accountId: AccountId): Money {
-    return this.loadAccountPort.loadAccount(accountId, new Date()).calculateBalance();
+  async getAccountBalance(accountId: AccountId): Promise<Money> {
+    return (await this.loadAccountPort.loadAccount(accountId, new Date())).calculateBalance();
   }
 }
