@@ -5,11 +5,11 @@ import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
 export class ActivityRepositoryImpl implements ActivityRepository {
   constructor(private readonly typeormRepository: Repository<ActivityTypeOrmEntity>) {}
 
-  findByOwnerSince(ownerAccountId: string, since: Date): Promise<ActivityTypeOrmEntity[]> {
+  findByOwnerSince(ownerAccountId: number, since: Date): Promise<ActivityTypeOrmEntity[]> {
     return this.typeormRepository.find({ where: { ownerAccountId, timestamp: MoreThanOrEqual(since) } });
   }
 
-  getDepositBalanceUntil(accountId: string, until: Date): Promise<number | null> {
+  getDepositBalanceUntil(accountId: number, until: Date): Promise<number | null> {
     return this.typeormRepository.sum('amount', {
       sourceAccountId: accountId,
       targetAccountId: accountId,
@@ -17,7 +17,7 @@ export class ActivityRepositoryImpl implements ActivityRepository {
     });
   }
 
-  getWithdrawalBalanceUntil(accountId: string, until: Date): Promise<number | null> {
+  getWithdrawalBalanceUntil(accountId: number, until: Date): Promise<number | null> {
     return this.typeormRepository.sum('amount', {
       sourceAccountId: accountId,
       ownerAccountId: accountId,

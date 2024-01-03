@@ -33,7 +33,7 @@ describe('AccountRepositoryImpl', () => {
       const accountRepository = new AccountRepositoryImpl(accountTypeOrmRepository);
 
       // When
-      const result = await accountRepository.findById(new AccountId('1'));
+      const result = await accountRepository.findById(new AccountId(1));
 
       // Then
       expect(result).not.toBeNull();
@@ -45,7 +45,7 @@ describe('AccountRepositoryImpl', () => {
       const accountRepository = new AccountRepositoryImpl(accountTypeOrmRepository);
 
       // When & Then
-      expect(accountRepository.findById(new AccountId('1'))).rejects.toThrow(/^Account not found./);
+      expect(accountRepository.findById(new AccountId(1))).rejects.toThrow(/^Account not found./);
     });
   });
 });

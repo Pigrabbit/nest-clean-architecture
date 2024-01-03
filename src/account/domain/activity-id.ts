@@ -1,6 +1,6 @@
 export class ActivityId {
-  private _id: string;
-  constructor(id: string) {
+  private _id: number;
+  constructor(id: number) {
     this._id = id;
   }
 

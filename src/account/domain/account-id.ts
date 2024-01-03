@@ -3,9 +3,9 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class AccountId {
   @IsString()
   @IsNotEmpty()
-  private readonly _value: string;
+  private readonly _value: number;
 
-  constructor(id: string) {
+  constructor(id: number) {
     this._value = id;
   }
 

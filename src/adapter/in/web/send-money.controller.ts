@@ -1,4 +1,4 @@
-import { Controller, Param, Post } from '@nestjs/common';
+import { Controller, Param, ParseIntPipe, Post } from '@nestjs/common';
 import { SendMoneyCommand, SendMoneyUseCase } from 'account/application/port/in';
 import { AccountId, Money } from 'account/domain';
 
@@ -8,9 +8,9 @@ export class SendMoneyController {
 
   @Post('/accounts/send/:sourceAccountId/:targetAccountId/:amount')
   sendMoney(
-    @Param('sourceAccountId') sourceAccountId: string,
-    @Param('targetAccountId') targetAccountId: string,
-    @Param('amount') amount: number,
+    @Param('sourceAccountId', ParseIntPipe) sourceAccountId: number,
+    @Param('targetAccountId', ParseIntPipe) targetAccountId: number,
+    @Param('amount', ParseIntPipe) amount: number,
   ) {
     const command = new SendMoneyCommand(
       new AccountId(sourceAccountId),

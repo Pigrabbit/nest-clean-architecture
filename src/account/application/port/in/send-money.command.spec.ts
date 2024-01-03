@@ -4,8 +4,8 @@ import { SendMoneyCommand } from './send-money.command';
 describe('SendMoneyCommand', () => {
   it('should create instance', () => {
     // given
-    const sourceAccountId = new AccountId('1');
-    const targetAccountId = new AccountId('2');
+    const sourceAccountId = new AccountId(1);
+    const targetAccountId = new AccountId(2);
     const money = new Money(100);
     // when
     const command = new SendMoneyCommand(sourceAccountId, targetAccountId, money);
@@ -17,7 +17,7 @@ describe('SendMoneyCommand', () => {
     // given
     // @ts-expect-error test
     const sourceAccountId = new AccountId();
-    const targetAccountId = new AccountId('2');
+    const targetAccountId = new AccountId(2);
     const money = new Money(100);
     // then
     expect(() => {
@@ -27,7 +27,7 @@ describe('SendMoneyCommand', () => {
 
   it('should throw Error when targetAccountId is invalid', () => {
     // given
-    const sourceAccountId = new AccountId('1');
+    const sourceAccountId = new AccountId(1);
     // @ts-expect-error test
     const targetAccountId = new AccountId();
     const money = new Money(100);
@@ -39,8 +39,8 @@ describe('SendMoneyCommand', () => {
 
   it('should throw Error when money is invalid', () => {
     // given
-    const sourceAccountId = new AccountId('1');
-    const targetAccountId = new AccountId('2');
+    const sourceAccountId = new AccountId(1);
+    const targetAccountId = new AccountId(2);
     const money = new Money(-100);
     // then
     expect(() => {

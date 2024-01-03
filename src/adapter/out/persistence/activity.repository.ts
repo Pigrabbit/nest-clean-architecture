@@ -1,7 +1,7 @@
 import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
 
 export interface ActivityRepository {
-  findByOwnerSince(ownerAccountId: string, since: Date): Promise<ActivityTypeOrmEntity[]>;
-  getDepositBalanceUntil(accountId: string, until: Date): Promise<number | null>;
-  getWithdrawalBalanceUntil(accountId: string, until: Date): Promise<number | null>;
+  findByOwnerSince(ownerAccountId: number, since: Date): Promise<ActivityTypeOrmEntity[]>;
+  getDepositBalanceUntil(accountId: number, until: Date): Promise<number | null>;
+  getWithdrawalBalanceUntil(accountId: number, until: Date): Promise<number | null>;
 }

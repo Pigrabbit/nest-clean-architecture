@@ -3,11 +3,11 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 @Entity({ name: 'activity' })
 export class ActivityTypeOrmEntity {
   constructor(
-    id: string,
+    id: number,
     timestamp: Date,
-    ownerAccountId: string,
-    sourceAccountId: string,
-    targetAccountId: string,
+    ownerAccountId: number,
+    sourceAccountId: number,
+    targetAccountId: number,
     amount: number,
   ) {
     this._id = id;
@@ -19,7 +19,7 @@ export class ActivityTypeOrmEntity {
   }
 
   @PrimaryGeneratedColumn({ name: 'id' })
-  private _id: string;
+  private _id: number;
 
   get id() {
     return this._id;
@@ -33,21 +33,21 @@ export class ActivityTypeOrmEntity {
   }
 
   @Column({ name: 'ownerAccountId' })
-  private _ownerAccountId: string;
+  private _ownerAccountId: number;
 
   get ownerAccountId() {
     return this._ownerAccountId;
   }
 
   @Column({ name: 'sourceAccountId' })
-  private _sourceAccountId: string;
+  private _sourceAccountId: number;
 
   get sourceAccountId() {
     return this._sourceAccountId;
   }
 
   @Column({ name: 'targetAccountId' })
-  private _targetAccountId: string;
+  private _targetAccountId: number;
 
   get targetAccountId() {
     return this._targetAccountId;
