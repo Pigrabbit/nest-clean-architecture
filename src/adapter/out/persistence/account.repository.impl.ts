@@ -7,7 +7,10 @@ export class AccountRepositoryImpl implements AccountRepository {
   constructor(private readonly typeormRepository: Repository<AccountTypeOrmEntity>) {}
 
   async findById(accountId: AccountId): Promise<AccountTypeOrmEntity> {
-    const result = await this.typeormRepository.findOneBy({ id: accountId.value });
+    const result = await this.typeormRepository
+      .createQueryBuilder('account')
+      .where('account.id = :id', { id: accountId.value })
+      .getOne();
     if (!result) {
       throw new Error(`Account not found. accountId=${accountId.value}`);
     }

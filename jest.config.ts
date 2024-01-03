@@ -13,6 +13,11 @@ const config: Config = {
       },
     ],
   },
+  moduleNameMapper: {
+    '^account/(.*)$': '<rootDir>/src/account/$1',
+    '^adapter/(.*)$': '<rootDir>/src/adapter/$1',
+    '^common/(.*)$': '<rootDir>/src/common/$1',
+  },
   testEnvironment: 'node',
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
 };
