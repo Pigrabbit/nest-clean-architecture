@@ -17,6 +17,7 @@ const config: Config = {
     '^account/(.*)$': '<rootDir>/src/account/$1',
     '^adapter/(.*)$': '<rootDir>/src/adapter/$1',
     '^common/(.*)$': '<rootDir>/src/common/$1',
+    '^spec/(.*)$': '<rootDir>/src/spec/$1',
   },
   testEnvironment: 'node',
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
