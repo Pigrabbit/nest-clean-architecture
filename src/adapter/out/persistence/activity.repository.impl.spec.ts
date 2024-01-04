@@ -36,8 +36,8 @@ describe('ActivityRepositoryImpl', () => {
 
     beforeEach(async () => {
       [account1, account2] = await accountTypeOrmRepository.save([
-        accountTypeOrmRepository.create(new AccountTypeOrmEntity(1)),
-        accountTypeOrmRepository.create(new AccountTypeOrmEntity(2)),
+        accountTypeOrmRepository.create({ id: 1 }),
+        accountTypeOrmRepository.create({ id: 2 }),
       ]);
       await activityTypeOrmRepository.save([
         activityTypeOrmRepository.create({
@@ -76,8 +76,8 @@ describe('ActivityRepositoryImpl', () => {
 
     beforeEach(async () => {
       [account1, account2] = await accountTypeOrmRepository.save([
-        accountTypeOrmRepository.create(new AccountTypeOrmEntity(1)),
-        accountTypeOrmRepository.create(new AccountTypeOrmEntity(2)),
+        accountTypeOrmRepository.create({ id: 1 }),
+        accountTypeOrmRepository.create({ id: 2 }),
       ]);
       await activityTypeOrmRepository.save(
         activityTypeOrmRepository.create([
@@ -126,8 +126,8 @@ describe('ActivityRepositoryImpl', () => {
 
     beforeEach(async () => {
       [account1, account2] = await accountTypeOrmRepository.save([
-        accountTypeOrmRepository.create(new AccountTypeOrmEntity(1)),
-        accountTypeOrmRepository.create(new AccountTypeOrmEntity(2)),
+        accountTypeOrmRepository.create({ id: 1 }),
+        accountTypeOrmRepository.create({ id: 2 }),
       ]);
       await activityTypeOrmRepository.save(
         activityTypeOrmRepository.create([

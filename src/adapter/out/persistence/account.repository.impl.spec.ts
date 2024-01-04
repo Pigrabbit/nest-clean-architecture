@@ -29,7 +29,7 @@ describe('AccountRepositoryImpl', () => {
   describe('findById', () => {
     it('should return an account', async () => {
       // Given
-      await accountTypeOrmRepository.save(accountTypeOrmRepository.create(new AccountTypeOrmEntity(1)));
+      await accountTypeOrmRepository.save(accountTypeOrmRepository.create());
       const accountRepository = new AccountRepositoryImpl(accountTypeOrmRepository);
 
       // When
