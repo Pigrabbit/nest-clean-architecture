@@ -28,7 +28,7 @@ export class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccount
     throw new Error('Method not implemented.');
   }
 
-  private orZero(value: number | null): number {
+  private orZero(value: number | null | undefined): number {
     return value ?? 0;
   }
 }

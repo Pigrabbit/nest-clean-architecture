@@ -1,7 +1,7 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
 
 export class AccountId {
-  @IsString()
+  @IsPositive()
   @IsNotEmpty()
   private readonly _value: number;
 
