@@ -21,18 +21,16 @@ export class SendMoneyService implements SendMoneyUseCase {
       this.loadAccountPort.loadAccount(command.getTargetAccountId(), baselineDate),
     ]);
 
-    await this.accountLock.lockAccount(sourceAccount.id);
+    this.accountLock.lockAccount(sourceAccount.id);
     if (!sourceAccount.withdraw(command.getMoney(), targetAccount.id)) {
-      await this.accountLock.releaseAccount(sourceAccount.id);
+      this.accountLock.releaseAccount(sourceAccount.id);
       return false;
     }
 
-    await this.accountLock.lockAccount(targetAccount.id);
+    this.accountLock.lockAccount(targetAccount.id);
     if (!targetAccount.deposit(command.getMoney(), sourceAccount.id)) {
-      await Promise.all([
-        this.accountLock.releaseAccount(sourceAccount.id),
-        this.accountLock.releaseAccount(targetAccount.id),
-      ]);
+      this.accountLock.releaseAccount(sourceAccount.id);
+      this.accountLock.releaseAccount(targetAccount.id);
       return false;
     }
 
@@ -41,10 +39,9 @@ export class SendMoneyService implements SendMoneyUseCase {
       this.updateAccountStatePort.updateActivities(targetAccount),
     ]);
 
-    await Promise.all([
-      this.accountLock.releaseAccount(sourceAccount.id),
-      this.accountLock.releaseAccount(targetAccount.id),
-    ]);
+    this.accountLock.releaseAccount(sourceAccount.id);
+    this.accountLock.releaseAccount(targetAccount.id);
+
     return true;
   }
 
