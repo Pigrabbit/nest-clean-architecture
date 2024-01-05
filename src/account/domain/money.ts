@@ -32,4 +32,8 @@ export class Money {
   negate(): Money {
     return new Money(this.amount * -1);
   }
+
+  isGreaterThan(other: Money): boolean {
+    return this.amount > other.amount;
+  }
 }
