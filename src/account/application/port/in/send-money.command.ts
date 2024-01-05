@@ -21,6 +21,18 @@ export class SendMoneyCommand {
     this.validateSelf();
   }
 
+  getSourceAccountId(): AccountId {
+    return this.sourceAccountId;
+  }
+
+  getTargetAccountId(): AccountId {
+    return this.targetAccountId;
+  }
+
+  getMoney(): Money {
+    return this.money;
+  }
+
   private validateSelf() {
     const errors = validateSync(this);
     if (errors.length > 0) {

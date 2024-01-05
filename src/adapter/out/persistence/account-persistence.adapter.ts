@@ -24,7 +24,13 @@ export class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccount
     return this.accountMapper.mapToDomainEntity({ account, activities, withdrawalBalance, depositBalance });
   }
 
-  updateActivities(account: Account): void {
+  async updateActivities(account: Account): Promise<void> {
+    for (const activity of account.activityWindow.getActivities()) {
+      if (activity.getId() !== null) {
+        continue;
+      }
+      await this.activityRepository.save(this.accountMapper.mapToTypeOrmEntity(activity, this.activityRepository));
+    }
     throw new Error('Method not implemented.');
   }
 

@@ -1,15 +1,60 @@
+import { Money } from 'account/domain';
+import dayjs from 'dayjs';
 import { SendMoneyUseCase, SendMoneyCommand } from '../port/in';
 import { LoadAccountPort, AccountLock, UpdateAccountStatePort } from '../port/out';
 
 export class SendMoneyService implements SendMoneyUseCase {
-  private loadAccountPort: LoadAccountPort;
-  private accountLock: AccountLock;
-  private updateAccountStatePort: UpdateAccountStatePort;
+  private static maximumTransferThreshold = Money.of(1000000);
 
-  sendMoney(command: SendMoneyCommand): boolean {
-    // TODO 비지니스 규칙 검증
-    // TODO 모델 상태 조직
-    // TODO 출력값 변환
+  constructor(
+    private readonly loadAccountPort: LoadAccountPort,
+    private readonly accountLock: AccountLock,
+    private readonly updateAccountStatePort: UpdateAccountStatePort,
+  ) {}
+
+  async sendMoney(command: SendMoneyCommand): Promise<boolean> {
+    this.checkThreshold(command);
+
+    const baselineDate = dayjs(new Date()).subtract(10, 'days').toDate();
+    const [sourceAccount, targetAccount] = await Promise.all([
+      this.loadAccountPort.loadAccount(command.getSourceAccountId(), baselineDate),
+      this.loadAccountPort.loadAccount(command.getTargetAccountId(), baselineDate),
+    ]);
+
+    await this.accountLock.lockAccount(sourceAccount.id);
+    if (!sourceAccount.withdraw(command.getMoney(), targetAccount.id)) {
+      await this.accountLock.releaseAccount(sourceAccount.id);
+      return false;
+    }
+
+    await this.accountLock.lockAccount(targetAccount.id);
+    if (!targetAccount.deposit(command.getMoney(), sourceAccount.id)) {
+      await Promise.all([
+        this.accountLock.releaseAccount(sourceAccount.id),
+        this.accountLock.releaseAccount(targetAccount.id),
+      ]);
+      return false;
+    }
+
+    await Promise.all([
+      this.updateAccountStatePort.updateActivities(sourceAccount),
+      this.updateAccountStatePort.updateActivities(targetAccount),
+    ]);
+
+    await Promise.all([
+      this.accountLock.releaseAccount(sourceAccount.id),
+      this.accountLock.releaseAccount(targetAccount.id),
+    ]);
     return true;
+  }
+
+  private checkThreshold(command: SendMoneyCommand) {
+    if (command.getMoney().isGreaterThan(SendMoneyService.maximumTransferThreshold)) {
+      throw new Error(
+        `Maximum transfer threshold exceeded. maximumThreshold=${
+          SendMoneyService.maximumTransferThreshold
+        }, tried=${command.getMoney()}`,
+      );
+    }
   }
 }

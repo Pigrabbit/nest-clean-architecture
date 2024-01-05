@@ -1,5 +1,5 @@
 import { SendMoneyCommand } from './send-money.command';
 
 export interface SendMoneyUseCase {
-  sendMoney(command: SendMoneyCommand): boolean;
+  sendMoney(command: SendMoneyCommand): boolean | Promise<boolean>;
 }

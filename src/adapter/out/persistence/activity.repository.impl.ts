@@ -5,6 +5,10 @@ import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
 export class ActivityRepositoryImpl implements ActivityRepository {
   constructor(private readonly typeormRepository: Repository<ActivityTypeOrmEntity>) {}
 
+  create(entityLike: Partial<ActivityTypeOrmEntity>): ActivityTypeOrmEntity {
+    return this.typeormRepository.create(entityLike);
+  }
+
   findByOwnerSince(ownerAccountId: number, since: Date): Promise<ActivityTypeOrmEntity[]> {
     return this.typeormRepository.find({ where: { ownerAccountId, timestamp: MoreThanOrEqual(since) } });
   }
@@ -23,5 +27,9 @@ export class ActivityRepositoryImpl implements ActivityRepository {
       ownerAccountId: accountId,
       timestamp: LessThanOrEqual(until),
     });
+  }
+
+  save(activity: ActivityTypeOrmEntity): Promise<ActivityTypeOrmEntity> {
+    return this.typeormRepository.save(activity);
   }
 }

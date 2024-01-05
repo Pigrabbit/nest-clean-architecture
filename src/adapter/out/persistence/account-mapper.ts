@@ -1,5 +1,7 @@
 import { Account, AccountId, Activity, ActivityId, ActivityWindow, Money } from 'account/domain';
+import { Repository } from 'typeorm';
 import { AccountTypeOrmEntity } from './account.typeorm.entity';
+import { ActivityRepository } from './activity.repository';
 import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
 
 export class AccountMapper {
@@ -34,14 +36,14 @@ export class AccountMapper {
     return new ActivityWindow(mappedActivities);
   }
 
-  //   mapToTypeOrmEntity(activity: Activity) {
-  //     return new ActivityTypeOrmEntity(
-  //       activity.getId() === null ? null : activity.getId().id,
-  //       activity.getTimestamp(),
-  //       activity.getOwnerAccountId().value,
-  //       activity.getSourceAccountId().value,
-  //       activity.getTargetAccountId().value,
-  //       activity.getMoney().getAmount(),
-  //     );
-  //   }
+  mapToTypeOrmEntity(activity: Activity, activityRepository: ActivityRepository): ActivityTypeOrmEntity {
+    return activityRepository.create({
+      id: activity.getId() === null ? undefined : (activity.getId() as ActivityId).id,
+      timestamp: activity.getTimestamp(),
+      ownerAccountId: activity.getOwnerAccountId().value,
+      sourceAccountId: activity.getSourceAccountId().value,
+      targetAccountId: activity.getTargetAccountId().value,
+      amount: activity.getMoney().getAmount(),
+    });
+  }
 }
