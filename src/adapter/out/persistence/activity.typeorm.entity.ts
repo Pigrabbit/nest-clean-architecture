@@ -8,13 +8,13 @@ export class ActivityTypeOrmEntity {
   @Column()
   public readonly timestamp: Date;
 
-  @Column()
+  @Column({ name: 'owner_account_id' })
   public readonly ownerAccountId: number;
 
-  @Column()
+  @Column({ name: 'source_account_id' })
   public readonly sourceAccountId: number;
 
-  @Column()
+  @Column({ name: 'target_account_id' })
   public readonly targetAccountId: number;
 
   @Column()

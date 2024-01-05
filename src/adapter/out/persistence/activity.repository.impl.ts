@@ -15,7 +15,7 @@ export class ActivityRepositoryImpl implements ActivityRepository {
 
   getDepositBalanceUntil(accountId: number, until: Date): Promise<number | null> {
     return this.typeormRepository.sum('amount', {
-      sourceAccountId: accountId,
+      ownerAccountId: accountId,
       targetAccountId: accountId,
       timestamp: LessThanOrEqual(until),
     });
@@ -23,8 +23,8 @@ export class ActivityRepositoryImpl implements ActivityRepository {
 
   getWithdrawalBalanceUntil(accountId: number, until: Date): Promise<number | null> {
     return this.typeormRepository.sum('amount', {
-      sourceAccountId: accountId,
       ownerAccountId: accountId,
+      sourceAccountId: accountId,
       timestamp: LessThanOrEqual(until),
     });
   }

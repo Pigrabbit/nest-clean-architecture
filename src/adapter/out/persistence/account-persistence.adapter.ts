@@ -1,14 +1,16 @@
+import { Inject, Injectable } from '@nestjs/common';
 import { LoadAccountPort, UpdateAccountStatePort } from 'account/application/port/out';
 import { AccountId, Account } from 'account/domain';
 import { AccountMapper } from './account-mapper';
 import { AccountRepository } from './account.repository';
 import { ActivityRepository } from './activity.repository';
 
+@Injectable()
 export class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccountStatePort {
   constructor(
-    private readonly accountRepository: AccountRepository,
-    private readonly activityRepository: ActivityRepository,
-    private readonly accountMapper: AccountMapper,
+    @Inject('AccountRepository') private readonly accountRepository: AccountRepository,
+    @Inject('ActivityRepository') private readonly activityRepository: ActivityRepository,
+    @Inject('AccountMapper') private readonly accountMapper: AccountMapper,
   ) {}
 
   async loadAccount(accountId: AccountId, baselineDate: Date): Promise<Account> {
