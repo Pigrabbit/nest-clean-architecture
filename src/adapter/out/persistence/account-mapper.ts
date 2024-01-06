@@ -1,5 +1,4 @@
 import { Account, AccountId, Activity, ActivityId, ActivityWindow, Money } from 'account/domain';
-import { Repository } from 'typeorm';
 import { AccountTypeOrmEntity } from './account.typeorm.entity';
 import { ActivityRepository } from './activity.repository';
 import { ActivityTypeOrmEntity } from './activity.typeorm.entity';

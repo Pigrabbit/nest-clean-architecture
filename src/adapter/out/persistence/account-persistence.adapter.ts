@@ -1,16 +1,14 @@
-import { Inject, Injectable } from '@nestjs/common';
 import { LoadAccountPort, UpdateAccountStatePort } from 'account/application/port/out';
-import { AccountId, Account } from 'account/domain';
+import { Account, AccountId } from 'account/domain';
 import { AccountMapper } from './account-mapper';
 import { AccountRepository } from './account.repository';
 import { ActivityRepository } from './activity.repository';
 
-@Injectable()
 export class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccountStatePort {
   constructor(
-    @Inject('AccountRepository') private readonly accountRepository: AccountRepository,
-    @Inject('ActivityRepository') private readonly activityRepository: ActivityRepository,
-    @Inject('AccountMapper') private readonly accountMapper: AccountMapper,
+    private readonly accountRepository: AccountRepository,
+    private readonly activityRepository: ActivityRepository,
+    private readonly accountMapper: AccountMapper,
   ) {}
 
   async loadAccount(accountId: AccountId, baselineDate: Date): Promise<Account> {
@@ -33,7 +31,6 @@ export class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccount
       }
       await this.activityRepository.save(this.accountMapper.mapToTypeOrmEntity(activity, this.activityRepository));
     }
-    throw new Error('Method not implemented.');
   }
 
   private orZero(value: number | null | undefined): number {

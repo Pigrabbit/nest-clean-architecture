@@ -5,3 +5,5 @@ export * from './account.repository.impl';
 export * from './activity.repository';
 export * from './activity.repository.impl';
 export * from './account-mapper';
+export * from './database.module';
+export * from './persistence-adapter.module';

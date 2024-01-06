@@ -26,20 +26,18 @@ describe('AccountPersistenceAdapter', () => {
 
     module = await Test.createTestingModule({
       providers: [
-        AccountPersistenceAdapter,
         {
-          provide: 'AccountRepository',
-          useFactory: () => {
-            return new AccountRepositoryImpl(appDataSource.getRepository(AccountTypeOrmEntity));
+          provide: AccountPersistenceAdapter,
+          useFactory: (accountMapper: AccountMapper) => {
+            return new AccountPersistenceAdapter(
+              new AccountRepositoryImpl(appDataSource.getRepository(AccountTypeOrmEntity)),
+              new ActivityRepositoryImpl(appDataSource.getRepository(ActivityTypeOrmEntity)),
+              accountMapper,
+            );
           },
+          inject: [AccountMapper],
         },
-        {
-          provide: 'ActivityRepository',
-          useFactory: () => {
-            return new ActivityRepositoryImpl(appDataSource.getRepository(ActivityTypeOrmEntity));
-          },
-        },
-        { provide: 'AccountMapper', useClass: AccountMapper },
+        AccountMapper,
       ],
     }).compile();
     await module.init();
