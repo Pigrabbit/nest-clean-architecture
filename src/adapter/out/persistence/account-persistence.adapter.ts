@@ -4,6 +4,9 @@ import { AccountMapper } from './account-mapper';
 import { AccountRepository } from './account.repository';
 import { ActivityRepository } from './activity.repository';
 
+/**
+ * 1 persistence adapter per domain aggregate
+ */
 export class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccountStatePort {
   constructor(
     private readonly accountRepository: AccountRepository,

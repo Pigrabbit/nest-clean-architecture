@@ -8,7 +8,7 @@ import { GetAccountBalanceService, NoOpAccountLock, SendMoneyService } from './s
 })
 export class AccountApplicationModule {
   static SEND_MONEY_USE_CASE = 'SendMoneyUseCase';
-  static GET_ACCOUNT_BALANCE_USE_CASE = 'GetAccountBalanceUseCase';
+  static GET_ACCOUNT_BALANCE_QUERY = 'GetAccountBalanceQuery';
 
   static register(): DynamicModule {
     return {
@@ -22,14 +22,14 @@ export class AccountApplicationModule {
           inject: [AccountPersistenceAdapter],
         },
         {
-          provide: AccountApplicationModule.GET_ACCOUNT_BALANCE_USE_CASE,
+          provide: AccountApplicationModule.GET_ACCOUNT_BALANCE_QUERY,
           useFactory: (accountPersistenceAdapter: AccountPersistenceAdapter) => {
             return new GetAccountBalanceService(accountPersistenceAdapter);
           },
           inject: [AccountPersistenceAdapter],
         },
       ],
-      exports: [AccountApplicationModule.SEND_MONEY_USE_CASE, AccountApplicationModule.GET_ACCOUNT_BALANCE_USE_CASE],
+      exports: [AccountApplicationModule.SEND_MONEY_USE_CASE, AccountApplicationModule.GET_ACCOUNT_BALANCE_QUERY],
     };
   }
 }
