@@ -14,6 +14,8 @@ import { DatabaseModule } from './database.module';
 export class PersistenceAdapterModule {
   static ACCOUNT_REPOSITORY = 'AccountRepository';
   static ACTIVITY_REPOSITORY = 'ActivityRepository';
+  static LOAD_ACCOUNT_PORT = 'LoadAccountPort';
+  static UPDATE_ACCOUNT_STATE_PORT = 'UpdateAccountStatePort';
 
   static register(): DynamicModule {
     return {
@@ -23,8 +25,10 @@ export class PersistenceAdapterModule {
         { provide: PersistenceAdapterModule.ACTIVITY_REPOSITORY, useClass: ActivityRepositoryImpl },
         AccountMapper,
         AccountPersistenceAdapter,
+        { provide: PersistenceAdapterModule.LOAD_ACCOUNT_PORT, useExisting: AccountPersistenceAdapter },
+        { provide: PersistenceAdapterModule.UPDATE_ACCOUNT_STATE_PORT, useExisting: AccountPersistenceAdapter },
       ],
-      exports: [AccountPersistenceAdapter],
+      exports: [PersistenceAdapterModule.LOAD_ACCOUNT_PORT, PersistenceAdapterModule.UPDATE_ACCOUNT_STATE_PORT],
     };
   }
 }

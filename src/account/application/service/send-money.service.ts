@@ -1,3 +1,4 @@
+import { Inject } from '@nestjs/common';
 import { Money } from 'account/domain';
 import dayjs from 'dayjs';
 import { SendMoneyCommand, SendMoneyUseCase } from '../port/in';
@@ -7,9 +8,9 @@ export class SendMoneyService implements SendMoneyUseCase {
   private static maximumTransferThreshold = Money.of(1000000);
 
   constructor(
-    private readonly loadAccountPort: LoadAccountPort,
-    private readonly accountLock: AccountLock,
-    private readonly updateAccountStatePort: UpdateAccountStatePort,
+    @Inject('LoadAccountPort') private readonly loadAccountPort: LoadAccountPort,
+    @Inject('AccountLock') private readonly accountLock: AccountLock,
+    @Inject('UpdateAccountStatePort') private readonly updateAccountStatePort: UpdateAccountStatePort,
   ) {}
 
   async sendMoney(command: SendMoneyCommand): Promise<boolean> {
