@@ -4,7 +4,7 @@ import { AccountPersistenceAdapter } from 'adapter/out/persistence/account-persi
 import { GetAccountBalanceService, NoOpAccountLock, SendMoneyService } from './service';
 
 @Module({
-  imports: [PersistenceAdapterModule],
+  imports: [PersistenceAdapterModule.register()],
 })
 export class AccountApplicationModule {
   static SEND_MONEY_USE_CASE = 'SendMoneyUseCase';

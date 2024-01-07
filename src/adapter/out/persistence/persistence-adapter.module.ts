@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common';
-import { getRepositoryToken, TypeOrmModule } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DynamicModule, Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountMapper } from './account-mapper';
 import { AccountPersistenceAdapter } from './account-persistence.adapter';
 import { AccountRepositoryImpl } from './account.repository.impl';
@@ -11,24 +10,21 @@ import { DatabaseModule } from './database.module';
 
 @Module({
   imports: [DatabaseModule, TypeOrmModule.forFeature([AccountTypeOrmEntity, ActivityTypeOrmEntity])],
-  providers: [
-    {
-      provide: AccountPersistenceAdapter,
-      useFactory: (
-        accountRepository: Repository<AccountTypeOrmEntity>,
-        activityRepository: Repository<ActivityTypeOrmEntity>,
-        accountMapper: AccountMapper,
-      ) => {
-        return new AccountPersistenceAdapter(
-          new AccountRepositoryImpl(accountRepository),
-          new ActivityRepositoryImpl(activityRepository),
-          accountMapper,
-        );
-      },
-      inject: [getRepositoryToken(AccountTypeOrmEntity), getRepositoryToken(ActivityTypeOrmEntity), AccountMapper],
-    },
-    AccountMapper,
-  ],
-  exports: [AccountPersistenceAdapter],
 })
-export class PersistenceAdapterModule {}
+export class PersistenceAdapterModule {
+  static ACCOUNT_REPOSITORY = 'AccountRepository';
+  static ACTIVITY_REPOSITORY = 'ActivityRepository';
+
+  static register(): DynamicModule {
+    return {
+      module: PersistenceAdapterModule,
+      providers: [
+        { provide: PersistenceAdapterModule.ACCOUNT_REPOSITORY, useClass: AccountRepositoryImpl },
+        { provide: PersistenceAdapterModule.ACTIVITY_REPOSITORY, useClass: ActivityRepositoryImpl },
+        AccountMapper,
+        AccountPersistenceAdapter,
+      ],
+      exports: [AccountPersistenceAdapter],
+    };
+  }
+}

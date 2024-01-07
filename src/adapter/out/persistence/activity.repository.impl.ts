@@ -1,12 +1,14 @@
+import { InjectRepository } from '@nestjs/typeorm';
 import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 import { ActivityRepository } from './activity.repository';
 import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
 
-export class ActivityRepositoryImpl implements ActivityRepository {
-  constructor(private readonly typeormRepository: Repository<ActivityTypeOrmEntity>) {}
-
-  create(entityLike: Partial<ActivityTypeOrmEntity>): ActivityTypeOrmEntity {
-    return this.typeormRepository.create(entityLike);
+export class ActivityRepositoryImpl extends Repository<ActivityTypeOrmEntity> implements ActivityRepository {
+  constructor(
+    @InjectRepository(ActivityTypeOrmEntity)
+    private readonly typeormRepository: Repository<ActivityTypeOrmEntity>,
+  ) {
+    super(typeormRepository.target, typeormRepository.manager, typeormRepository.queryRunner);
   }
 
   findByOwnerSince(ownerAccountId: number, since: Date): Promise<ActivityTypeOrmEntity[]> {
@@ -27,9 +29,5 @@ export class ActivityRepositoryImpl implements ActivityRepository {
       sourceAccountId: accountId,
       timestamp: LessThanOrEqual(until),
     });
-  }
-
-  save(activity: ActivityTypeOrmEntity): Promise<ActivityTypeOrmEntity> {
-    return this.typeormRepository.save(activity);
   }
 }

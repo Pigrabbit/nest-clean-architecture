@@ -4,6 +4,6 @@ import { WebAdapterModule } from 'adapter/in/web';
 import { PersistenceAdapterModule } from 'adapter/out/persistence';
 
 @Module({
-  imports: [WebAdapterModule, PersistenceAdapterModule, AccountApplicationModule.register()],
+  imports: [WebAdapterModule, PersistenceAdapterModule.register(), AccountApplicationModule.register()],
 })
 export class AppModule {}
