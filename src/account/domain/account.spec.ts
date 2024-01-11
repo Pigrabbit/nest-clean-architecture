@@ -1,6 +1,6 @@
 import { defaultAccount, defaultActivity } from 'spec/util';
 import { AccountId } from './account-id';
-import { ActivityWindow } from './acitiviti-window';
+import { ActivityWindow } from './acitivity-window';
 import { Money } from './money';
 
 describe('Account', () => {

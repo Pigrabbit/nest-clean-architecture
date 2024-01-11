@@ -1,5 +1,5 @@
 import { AccountId } from './account-id';
-import { ActivityWindow } from './acitiviti-window';
+import { ActivityWindow } from './acitivity-window';
 import { Activity } from './acitivity';
 import { Money } from './money';
 
