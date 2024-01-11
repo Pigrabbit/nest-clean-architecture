@@ -4,14 +4,15 @@ import { Account, AccountId } from 'account/domain';
 import { AccountMapper } from './account-mapper';
 import { AccountRepository } from './account.repository';
 import { ActivityRepository } from './activity.repository';
+import { ACCOUNT_REPOSITORY_INJECTION_TOKEN, ACTIVITY_REPOSITORY_INJECTION_TOKEN } from './constant';
 
 /**
  * 1 persistence adapter per domain aggregate
  */
 export class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccountStatePort {
   constructor(
-    @Inject('AccountRepository') private readonly accountRepository: AccountRepository,
-    @Inject('ActivityRepository') private readonly activityRepository: ActivityRepository,
+    @Inject(ACCOUNT_REPOSITORY_INJECTION_TOKEN) private readonly accountRepository: AccountRepository,
+    @Inject(ACTIVITY_REPOSITORY_INJECTION_TOKEN) private readonly activityRepository: ActivityRepository,
     private readonly accountMapper: AccountMapper,
   ) {}
 

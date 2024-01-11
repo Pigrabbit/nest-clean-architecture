@@ -1,34 +1,29 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import {
+  LOAD_ACCOUNT_PORT_INJECTION_TOKEN,
+  UPDATE_ACCOUNT_STATE_PORT_INJECTION_TOKEN,
+} from 'account/application/port/out';
+
 import { AccountMapper } from './account-mapper';
 import { AccountPersistenceAdapter } from './account-persistence.adapter';
 import { AccountRepositoryImpl } from './account.repository.impl';
 import { AccountTypeOrmEntity } from './account.typeorm.entity';
 import { ActivityRepositoryImpl } from './activity.repository.impl';
 import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
+import { ACCOUNT_REPOSITORY_INJECTION_TOKEN, ACTIVITY_REPOSITORY_INJECTION_TOKEN } from './constant';
 import { DatabaseModule } from './database.module';
 
 @Module({
   imports: [DatabaseModule, TypeOrmModule.forFeature([AccountTypeOrmEntity, ActivityTypeOrmEntity])],
+  providers: [
+    { provide: ACCOUNT_REPOSITORY_INJECTION_TOKEN, useClass: AccountRepositoryImpl },
+    { provide: ACTIVITY_REPOSITORY_INJECTION_TOKEN, useClass: ActivityRepositoryImpl },
+    AccountMapper,
+    AccountPersistenceAdapter,
+    { provide: LOAD_ACCOUNT_PORT_INJECTION_TOKEN, useExisting: AccountPersistenceAdapter },
+    { provide: UPDATE_ACCOUNT_STATE_PORT_INJECTION_TOKEN, useExisting: AccountPersistenceAdapter },
+  ],
+  exports: [LOAD_ACCOUNT_PORT_INJECTION_TOKEN, UPDATE_ACCOUNT_STATE_PORT_INJECTION_TOKEN],
 })
-export class PersistenceAdapterModule {
-  static ACCOUNT_REPOSITORY = 'AccountRepository';
-  static ACTIVITY_REPOSITORY = 'ActivityRepository';
-  static LOAD_ACCOUNT_PORT = 'LoadAccountPort';
-  static UPDATE_ACCOUNT_STATE_PORT = 'UpdateAccountStatePort';
-
-  static register(): DynamicModule {
-    return {
-      module: PersistenceAdapterModule,
-      providers: [
-        { provide: PersistenceAdapterModule.ACCOUNT_REPOSITORY, useClass: AccountRepositoryImpl },
-        { provide: PersistenceAdapterModule.ACTIVITY_REPOSITORY, useClass: ActivityRepositoryImpl },
-        AccountMapper,
-        AccountPersistenceAdapter,
-        { provide: PersistenceAdapterModule.LOAD_ACCOUNT_PORT, useExisting: AccountPersistenceAdapter },
-        { provide: PersistenceAdapterModule.UPDATE_ACCOUNT_STATE_PORT, useExisting: AccountPersistenceAdapter },
-      ],
-      exports: [PersistenceAdapterModule.LOAD_ACCOUNT_PORT, PersistenceAdapterModule.UPDATE_ACCOUNT_STATE_PORT],
-    };
-  }
-}
+export class PersistenceAdapterModule {}

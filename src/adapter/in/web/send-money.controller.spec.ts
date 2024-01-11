@@ -2,7 +2,7 @@ import request from 'supertest';
 import { Test, TestingModule } from '@nestjs/testing';
 import { SendMoneyController } from './send-money.controller';
 import { HttpStatus, INestApplication } from '@nestjs/common';
-import { SendMoneyCommand, SendMoneyUseCase } from 'account/application/port/in';
+import { SendMoneyCommand, SendMoneyUseCase, SEND_MONEY_USE_CASE_INJECTION_TOKEN } from 'account/application/port/in';
 import { AccountId, Money } from 'account/domain';
 
 describe('SendMoneyController', () => {
@@ -12,7 +12,7 @@ describe('SendMoneyController', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [SendMoneyController],
-      providers: [{ provide: 'SendMoneyUseCase', useValue: sendMoneyUseCase }],
+      providers: [{ provide: SEND_MONEY_USE_CASE_INJECTION_TOKEN, useValue: sendMoneyUseCase }],
     }).compile();
 
     app = moduleFixture.createNestApplication();

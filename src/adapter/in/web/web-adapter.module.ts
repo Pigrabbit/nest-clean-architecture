@@ -4,7 +4,7 @@ import { GetAccountBalanceController } from './get-account-balance.controller';
 import { SendMoneyController } from './send-money.controller';
 
 @Module({
-  imports: [AccountApplicationModule.register()],
+  imports: [AccountApplicationModule],
   controllers: [SendMoneyController, GetAccountBalanceController],
 })
 export class WebAdapterModule {}

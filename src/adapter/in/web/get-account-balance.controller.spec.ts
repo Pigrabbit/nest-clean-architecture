@@ -1,9 +1,8 @@
-import request from 'supertest';
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { AccountApplicationModule } from 'account/application/application.module';
-import { GetAccountBalanceQuery } from 'account/application/port/in';
+import { GetAccountBalanceQuery, GET_ACCOUNT_BALANCE_QUERY_INJECTION_TOKEN } from 'account/application/port/in';
 import { AccountId } from 'account/domain';
+import request from 'supertest';
 import { GetAccountBalanceController } from './get-account-balance.controller';
 
 describe('GetAccountBalanceController', () => {
@@ -13,7 +12,7 @@ describe('GetAccountBalanceController', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [GetAccountBalanceController],
-      providers: [{ provide: AccountApplicationModule.GET_ACCOUNT_BALANCE_QUERY, useValue: getAccountBalanceQuery }],
+      providers: [{ provide: GET_ACCOUNT_BALANCE_QUERY_INJECTION_TOKEN, useValue: getAccountBalanceQuery }],
     }).compile();
 
     app = moduleFixture.createNestApplication();
