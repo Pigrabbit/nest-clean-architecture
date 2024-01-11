@@ -1,7 +1,7 @@
 import { createMock } from '@golevelup/ts-jest';
 
 import { AccountId, ActivityWindow, Money } from 'account/domain';
-import { defaultAccount } from 'spec/util';
+import { defaultAccount } from '../../../../spec/util';
 import { SendMoneyCommand } from '../port/in';
 import { AccountLock, LoadAccountPort, UpdateAccountStatePort } from '../port/out';
 import { SendMoneyService } from './send-money.service';

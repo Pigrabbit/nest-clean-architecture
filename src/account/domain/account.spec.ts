@@ -1,4 +1,4 @@
-import { defaultAccount, defaultActivity } from 'spec/util';
+import { defaultAccount, defaultActivity } from '../../../spec/util';
 import { AccountId } from './account-id';
 import { ActivityWindow } from './acitivity-window';
 import { Money } from './money';
