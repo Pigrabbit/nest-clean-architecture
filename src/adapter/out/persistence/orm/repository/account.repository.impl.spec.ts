@@ -1,7 +1,7 @@
 import { AccountId } from 'account/domain';
 import { DataSource, Repository } from 'typeorm';
-import { AccountRepositoryImpl } from './account.repository.impl';
-import { AccountTypeOrmEntity } from './account.typeorm.entity';
+import { AccountRepositoryImpl } from '.';
+import { AccountTypeOrmEntity } from '../entity';
 
 describe('AccountRepositoryImpl', () => {
   let appDataSource: DataSource;

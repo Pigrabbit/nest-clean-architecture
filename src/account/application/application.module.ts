@@ -1,4 +1,4 @@
-import { DynamicModule, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { PersistenceAdapterModule } from 'adapter/out/persistence';
 import { GET_ACCOUNT_BALANCE_QUERY_INJECTION_TOKEN, SEND_MONEY_USE_CASE_INJECTION_TOKEN } from './port/in';
 import { ACCOUNT_LOCK_INJECTION_TOKEN } from './port/out';

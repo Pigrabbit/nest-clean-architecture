@@ -1,5 +1,5 @@
-import { AccountId, Account } from "../../../domain";
+import { AccountId, Account } from '../../../domain';
 
 export interface LoadAccountPort {
-  loadAccount(accountId: AccountId, baselineDate: Date): Account | Promise<Account>;
+  loadAccount(accountId: AccountId, baselineDate: Date): Promise<Account>;
 }

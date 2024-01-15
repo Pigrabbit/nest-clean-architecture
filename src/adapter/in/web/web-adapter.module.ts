@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AccountApplicationModule } from 'account/application/application.module';
-import { GetAccountBalanceController } from './get-account-balance.controller';
-import { SendMoneyController } from './send-money.controller';
+import { SendMoneyController, GetAccountBalanceController } from './controller';
 
 @Module({
   imports: [AccountApplicationModule],

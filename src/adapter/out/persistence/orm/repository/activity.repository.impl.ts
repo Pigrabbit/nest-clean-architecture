@@ -1,7 +1,7 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { LessThanOrEqual, MoreThanOrEqual, Repository } from 'typeorm';
 import { ActivityRepository } from './activity.repository';
-import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
+import { ActivityTypeOrmEntity } from '../entity';
 
 export class ActivityRepositoryImpl extends Repository<ActivityTypeOrmEntity> implements ActivityRepository {
   constructor(

@@ -1,8 +1,8 @@
 import { DataSource, Repository } from 'typeorm';
-import { AccountTypeOrmEntity } from './account.typeorm.entity';
+import { AccountTypeOrmEntity } from '../entity';
 import { ActivityRepository } from './activity.repository';
-import { ActivityRepositoryImpl } from './activity.repository.impl';
-import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
+import { ActivityRepositoryImpl } from '.';
+import { ActivityTypeOrmEntity } from '../entity';
 
 describe('ActivityRepositoryImpl', () => {
   let appDataSource: DataSource;

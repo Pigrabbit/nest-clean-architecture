@@ -2,7 +2,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { AccountId } from 'account/domain';
 import { Repository } from 'typeorm';
 import { AccountRepository } from './account.repository';
-import { AccountTypeOrmEntity } from './account.typeorm.entity';
+import { AccountTypeOrmEntity } from '../entity';
 
 export class AccountRepositoryImpl extends Repository<AccountTypeOrmEntity> implements AccountRepository {
   constructor(
@@ -13,10 +13,7 @@ export class AccountRepositoryImpl extends Repository<AccountTypeOrmEntity> impl
   }
 
   async findById(accountId: AccountId): Promise<AccountTypeOrmEntity> {
-    const result = await this.typeormRepository
-      .createQueryBuilder('account')
-      .where('account.id = :id', { id: accountId.value })
-      .getOne();
+    const result = await this.typeormRepository.findOneBy({ id: accountId.value });
     if (!result) {
       throw new Error(`Account not found. accountId=${accountId.value}`);
     }

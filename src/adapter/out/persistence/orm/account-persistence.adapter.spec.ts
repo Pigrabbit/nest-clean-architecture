@@ -1,14 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AccountId, Money } from 'account/domain';
 import { DataSource } from 'typeorm';
-import {
-  AccountMapper,
-  AccountRepositoryImpl,
-  AccountTypeOrmEntity,
-  ActivityRepositoryImpl,
-  ActivityTypeOrmEntity,
-} from '.';
+
 import { AccountPersistenceAdapter } from './account-persistence.adapter';
+import { AccountMapper } from './mapper';
+import { AccountTypeOrmEntity, ActivityTypeOrmEntity } from './entity';
+import { AccountRepositoryImpl, ActivityRepositoryImpl } from './repository';
 
 describe('AccountPersistenceAdapter', () => {
   let appDataSource: DataSource;

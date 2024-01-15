@@ -7,6 +7,6 @@ export class GetAccountBalanceService implements GetAccountBalanceQuery {
   constructor(@Inject(LOAD_ACCOUNT_PORT_INJECTION_TOKEN) private readonly loadAccountPort: LoadAccountPort) {}
 
   async getAccountBalance(accountId: AccountId): Promise<Money> {
-    return (await this.loadAccountPort.loadAccount(accountId, new Date())).calculateBalance();
+    return this.loadAccountPort.loadAccount(accountId, new Date()).then((account) => account.calculateBalance());
   }
 }

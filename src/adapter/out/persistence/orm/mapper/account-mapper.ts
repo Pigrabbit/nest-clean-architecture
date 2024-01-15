@@ -1,7 +1,6 @@
 import { Account, AccountId, Activity, ActivityId, ActivityWindow, Money } from 'account/domain';
-import { AccountTypeOrmEntity } from './account.typeorm.entity';
-import { ActivityRepository } from './activity.repository';
-import { ActivityTypeOrmEntity } from './activity.typeorm.entity';
+import { ActivityRepository } from '../repository';
+import { AccountTypeOrmEntity, ActivityTypeOrmEntity } from '../entity';
 
 export class AccountMapper {
   mapToDomainEntity({

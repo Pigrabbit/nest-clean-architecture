@@ -1,18 +1,17 @@
-import { Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { LoadAccountPort, UpdateAccountStatePort } from 'account/application/port/out';
 import { Account, AccountId } from 'account/domain';
-import { AccountMapper } from './account-mapper';
-import { AccountRepository } from './account.repository';
-import { ActivityRepository } from './activity.repository';
-import { ACCOUNT_REPOSITORY_INJECTION_TOKEN, ACTIVITY_REPOSITORY_INJECTION_TOKEN } from './constant';
+import { AccountMapper } from './mapper';
+import { AccountRepository, ActivityRepository } from './repository';
 
 /**
  * 1 persistence adapter per domain aggregate
  */
+@Injectable()
 export class AccountPersistenceAdapter implements LoadAccountPort, UpdateAccountStatePort {
   constructor(
-    @Inject(ACCOUNT_REPOSITORY_INJECTION_TOKEN) private readonly accountRepository: AccountRepository,
-    @Inject(ACTIVITY_REPOSITORY_INJECTION_TOKEN) private readonly activityRepository: ActivityRepository,
+    private readonly accountRepository: AccountRepository,
+    private readonly activityRepository: ActivityRepository,
     private readonly accountMapper: AccountMapper,
   ) {}
 
