@@ -1,7 +1,7 @@
 {
-  "name": "study-clean-arch",
+  "name": "nestjs-clean-architecture",
   "version": "0.0.1",
-  "description": "",
+  "description": "Clean Architecture example in TypeScript",
   "scripts": {
     "build": "nest build",
     "start": "nest start",
@@ -10,8 +10,14 @@
     "test": "jest",
     "type-check": "tsc --noEmit"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "nestjs",
+    "typescript",
+    "clean architecture",
+    "hexagonal architecture",
+    "port and adapter"
+  ],
+  "author": "Donghyuk Kang",
   "license": "ISC",
   "devDependencies": {
     "@golevelup/ts-jest": "^0.4.0",
