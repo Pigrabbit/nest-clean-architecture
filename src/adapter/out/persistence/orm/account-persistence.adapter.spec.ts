@@ -1,15 +1,13 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { AccountId, Money } from 'account/domain';
 import { DataSource } from 'typeorm';
 
 import { AccountPersistenceAdapter } from './account-persistence.adapter';
-import { AccountMapper } from './mapper';
 import { AccountTypeOrmEntity, ActivityTypeOrmEntity } from './entity';
+import { AccountMapper } from './mapper';
 import { AccountRepositoryImpl, ActivityRepositoryImpl } from './repository';
 
 describe('AccountPersistenceAdapter', () => {
   let appDataSource: DataSource;
-  let module: TestingModule;
   let accountPersistenceAdapter: AccountPersistenceAdapter;
 
   beforeAll(async () => {
@@ -21,25 +19,11 @@ describe('AccountPersistenceAdapter', () => {
     });
     await appDataSource.initialize();
 
-    module = await Test.createTestingModule({
-      providers: [
-        {
-          provide: AccountPersistenceAdapter,
-          useFactory: (accountMapper: AccountMapper) => {
-            return new AccountPersistenceAdapter(
-              new AccountRepositoryImpl(appDataSource.getRepository(AccountTypeOrmEntity)),
-              new ActivityRepositoryImpl(appDataSource.getRepository(ActivityTypeOrmEntity)),
-              accountMapper,
-            );
-          },
-          inject: [AccountMapper],
-        },
-        AccountMapper,
-      ],
-    }).compile();
-    await module.init();
-
-    accountPersistenceAdapter = module.get<AccountPersistenceAdapter>(AccountPersistenceAdapter);
+    accountPersistenceAdapter = new AccountPersistenceAdapter(
+      new AccountRepositoryImpl(appDataSource.getRepository(AccountTypeOrmEntity)),
+      new ActivityRepositoryImpl(appDataSource.getRepository(ActivityTypeOrmEntity)),
+      new AccountMapper(),
+    );
   });
 
   beforeEach(async () => {
@@ -73,7 +57,6 @@ describe('AccountPersistenceAdapter', () => {
   });
 
   afterAll(async () => {
-    await module.close();
     await appDataSource.destroy();
   });
 

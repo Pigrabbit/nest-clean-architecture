@@ -1,10 +1,10 @@
-import { Controller, Inject, Param, ParseIntPipe, Post } from '@nestjs/common';
-import { SendMoneyCommand, SendMoneyUseCase, SEND_MONEY_USE_CASE_INJECTION_TOKEN } from 'account/application/port/in';
+import { Controller, Param, ParseIntPipe, Post } from '@nestjs/common';
+import { SendMoneyCommand, SendMoneyUseCase } from 'account/application/port/in';
 import { AccountId, Money } from 'account/domain';
 
 @Controller()
 export class SendMoneyController {
-  constructor(@Inject(SEND_MONEY_USE_CASE_INJECTION_TOKEN) private readonly sendMoneyUseCase: SendMoneyUseCase) {}
+  constructor(private readonly sendMoneyUseCase: SendMoneyUseCase) {}
 
   @Post('/accounts/send/:sourceAccountId/:targetAccountId/:amount')
   sendMoney(

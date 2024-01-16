@@ -1,6 +1,6 @@
 import { AccountId } from 'account/domain';
 
-export interface AccountLock {
-  lockAccount(accountId: AccountId): void;
-  releaseAccount(accountId: AccountId): void;
+export abstract class AccountLock {
+  abstract lockAccount(accountId: AccountId): void;
+  abstract releaseAccount(accountId: AccountId): void;
 }

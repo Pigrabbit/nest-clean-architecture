@@ -1,4 +1,4 @@
-import { AccountId, Money } from '../../../domain';
+import { AccountId, Money } from 'account/domain';
 import { SendMoneyCommand } from './send-money.command';
 
 describe('SendMoneyCommand', () => {

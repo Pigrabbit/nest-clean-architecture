@@ -1,4 +1,3 @@
-export * from './send-money.command';
-export * from './send-money.use-case';
-export * from './get-account-balance.query';
-export * from './constant';
+export * from './command';
+export * from './use-case';
+export * from './query';

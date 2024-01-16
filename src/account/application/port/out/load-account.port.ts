@@ -1,5 +1,5 @@
 import { AccountId, Account } from '../../../domain';
 
-export interface LoadAccountPort {
-  loadAccount(accountId: AccountId, baselineDate: Date): Promise<Account>;
+export abstract class LoadAccountPort {
+  abstract loadAccount(accountId: AccountId, baselineDate: Date): Promise<Account>;
 }

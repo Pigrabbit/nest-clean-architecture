@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber, IsPositive, IsString } from 'class-validator';
+import { IsNotEmpty, IsPositive } from 'class-validator';
 
 export class AccountId {
   @IsPositive()

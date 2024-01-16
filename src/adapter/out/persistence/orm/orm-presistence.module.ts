@@ -1,9 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {
-  LOAD_ACCOUNT_PORT_INJECTION_TOKEN,
-  UPDATE_ACCOUNT_STATE_PORT_INJECTION_TOKEN,
-} from 'account/application/port/out';
+import { LoadAccountPort, UpdateAccountStatePort } from 'account/application/port/out';
 import { AccountPersistenceAdapter } from './account-persistence.adapter';
 import { AccountTypeOrmEntity, ActivityTypeOrmEntity } from './entity';
 import { AccountMapper } from './mapper';
@@ -16,9 +13,9 @@ import { AccountRepository, AccountRepositoryImpl, ActivityRepository, ActivityR
     { provide: ActivityRepository, useClass: ActivityRepositoryImpl },
     AccountMapper,
     AccountPersistenceAdapter,
-    { provide: LOAD_ACCOUNT_PORT_INJECTION_TOKEN, useExisting: AccountPersistenceAdapter },
-    { provide: UPDATE_ACCOUNT_STATE_PORT_INJECTION_TOKEN, useExisting: AccountPersistenceAdapter },
+    { provide: LoadAccountPort, useExisting: AccountPersistenceAdapter },
+    { provide: UpdateAccountStatePort, useExisting: AccountPersistenceAdapter },
   ],
-  exports: [LOAD_ACCOUNT_PORT_INJECTION_TOKEN, UPDATE_ACCOUNT_STATE_PORT_INJECTION_TOKEN],
+  exports: [LoadAccountPort, UpdateAccountStatePort],
 })
 export class OrmPersistenceModule {}

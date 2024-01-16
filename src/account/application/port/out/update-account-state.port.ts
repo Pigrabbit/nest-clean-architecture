@@ -1,5 +1,5 @@
 import { Account } from "account/domain";
 
-export interface UpdateAccountStatePort {
-  updateActivities(account: Account): void | Promise<void>;
+export abstract class UpdateAccountStatePort {
+  abstract updateActivities(account: Account): void | Promise<void>;
 }

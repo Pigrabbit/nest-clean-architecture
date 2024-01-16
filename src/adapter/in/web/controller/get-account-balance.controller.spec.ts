@@ -1,6 +1,6 @@
 import { HttpStatus, INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { GetAccountBalanceQuery, GET_ACCOUNT_BALANCE_QUERY_INJECTION_TOKEN } from 'account/application/port/in';
+import { GetAccountBalanceQuery } from 'account/application/port/in';
 import { AccountId } from 'account/domain';
 import request from 'supertest';
 import { GetAccountBalanceController } from './get-account-balance.controller';
@@ -12,7 +12,7 @@ describe('GetAccountBalanceController', () => {
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       controllers: [GetAccountBalanceController],
-      providers: [{ provide: GET_ACCOUNT_BALANCE_QUERY_INJECTION_TOKEN, useValue: getAccountBalanceQuery }],
+      providers: [{ provide: GetAccountBalanceQuery, useValue: getAccountBalanceQuery }],
     }).compile();
 
     app = moduleFixture.createNestApplication();

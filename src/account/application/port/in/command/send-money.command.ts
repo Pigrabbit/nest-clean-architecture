@@ -1,5 +1,5 @@
 import { ValidateNested, validateSync } from 'class-validator';
-import { Money, AccountId } from '../../../domain';
+import { Money, AccountId } from '../../../../domain';
 
 /**
  * Anti coruuption layer
